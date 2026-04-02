@@ -5,6 +5,7 @@ const cors = require('cors');
 // Al hacer esto, el código de database.js se ejecuta y crea el archivo .sqlite
 const db = require('./src/db/database'); 
 const authRoutes = require('./src/routes/auth');
+const videosRoutes = require('./src/routes/videos');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,6 +14,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors()); // Permite peticiones desde el frontend
 app.use(express.json()); // Permite a nuestro servidor entender los datos JSON que enviemos desde formularios
 app.use('/api/auth', authRoutes); // Para usar rutas de autenticación de la API
+app.use('/api/videos', videosRoutes); // Permite indicar las rutas de los vídeos
 app.use(express.static('public')); // Le dice a Express que sirva los archivos HTML/CSS de la carpeta public
 
 // RUTA DE PRUEBA
