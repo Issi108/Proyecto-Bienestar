@@ -105,5 +105,27 @@ router.post('/generar', (req, res) => {
         }
     });
 });
+// ==========================================
+// CASO DE USO 4: Marcar vídeo como completado 
+// Ruta: PATCH /api/planning/:id_planning/completar
+// ==========================================
+router.patch('/:id_planning/completar', (req, res) => {
+    // Obtenemos el ID específico del registro en la tabla planning_usuario
+    const id_planning = req.params.id_planning;
+
+    // El sistema se actualiza (completado = 1) 
+    const sql = `UPDATE planning_usuario SET completado = 1 WHERE id_planning = ?`;
+
+    db.run(sql, [id_planning], function(err) {
+        if (err) return res.status(500).json({ error: 'Error de actualización en base de datos.' }); 
+
+        // Si no se ha modificado ninguna fila, es porque ese ID no existe para el usuario 
+        if (this.changes === 0) {
+            return res.status(404).json({ error: 'El vídeo no pertenece a su planning.' }); 
+        }
+
+        res.status(200).json({ mensaje: 'Vídeo marcado como completado con éxito.' });
+    });
+});
 
 module.exports = router;
