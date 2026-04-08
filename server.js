@@ -31,3 +31,6 @@ app.get('/api/estado', (req, res) => {
 app.listen(PORT, () => {
     console.log(`🚀 Servidor ejecutándose en http://localhost:${PORT}`);
 });
+
+// Exportamos el servidor para pruebas con Jest
+module.exports = app;
