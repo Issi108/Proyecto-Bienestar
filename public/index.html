@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienestar Integral - Acceso</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-image">
+            </div>
+
+        <div class="auth-forms">
+            <div class="logo-container">
+                <img src="assets/img/logo.png" alt="Logo Bienestar Integral" class="logo">
+                <h1>Bienvenida/o a tu espacio</h1>
+            </div>
+
+            <form id="login-form" class="form-box">
+                <h2>Iniciar Sesión</h2>
+                <div class="input-group">
+                    <label for="login-email">Correo electrónico</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                <div class="input-group">
+                    <label for="login-password">Contraseña</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="btn-primary">Entrar</button>
+                <p>¿No tienes cuenta? <a href="#" id="show-register">Regístrate aquí</a></p>
+            </form>
+
+            <form id="register-form" class="form-box" style="display: none;">
+                 <h2>Crea tu cuenta</h2>
+                 <div class="input-group">
+                    <label for="reg-nombre">Nombre completo</label>
+                    <input type="text" id="reg-nombre" required>
+            </div>
+            <div class="input-group">
+                <label for="reg-email">Correo electrónico</label>
+                <input type="email" id="reg-email" required>
+            </div>
+             <div class="input-group">
+                 <label for="reg-password">Contraseña (mín. 8 caracteres)</label>
+                <input type="password" id="reg-password" required minlength="8">
+             </div>
+             <div class="input-group">
+                 <label for="reg-nivel">Tu nivel actual</label>
+                 <select id="reg-nivel">
+                    <option value="1">Principiante</option>
+                    <option value="2">Avanzado</option>
+                 </select>
+             </div>
+             <div class="input-group">
+                <label for="reg-estado">¿Cómo te sientes hoy?</label>
+                <select id="reg-estado">
+                    <option value="1">Calma</option>
+                    <option value="2">Equilibrio</option>
+                    <option value="3">Energía</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-primary">Registrarme</button>
+            <p>¿Ya tienes cuenta? <a href="#" id="show-login">Inicia sesión aquí</a></p>
+            </form>
+            </div>
+    </div>
+     
+    <script src="js/login.js"></script>
+    
+</body>
+</html>

@@ -3,26 +3,24 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const db = require('../db/database'); // Importamos la conexión a la base de datos
 
-// ==========================================
-// CASO DE USO 1: REGISTRO DE USUARIO
+// CASO: Registro de Usuario
 // Ruta: POST /api/auth/registro
-// ==========================================
+
 router.post('/registro', async (req, res) => {
-    // 1. Recibimos los datos del formulario (frontend)
+    // Recibimos los datos del formulario (frontend)
     const { nombre, email, password, nivel_id, estado_preferente_id } = req.body;
 
-    // 2. Validamos campos vacíos según tu Caso de Uso
+    // Validamos que no queden campos vacíos 
     if (!nombre || !email || !password) {
         return res.status(400).json({ error: 'Debe completar todos los campos obligatorios.' });
     }
 
     try {
-        // 3. Encriptar la contraseña (Requisito No Funcional 1)
-        // El '10' es el nivel de seguridad del encriptado (salt)
+        // Encriptamos la contraseña (uso librería bcrypt)
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        // 4. Guardar en la base de datos
+        // Guardar en la base de datos
         const sql = `INSERT INTO usuarios (nombre, email, password, nivel_id, estado_preferente_id) VALUES (?, ?, ?, ?, ?)`;
         
         db.run(sql, [nombre, email, hashedPassword, nivel_id, estado_preferente_id], function(err) {
@@ -35,7 +33,7 @@ router.post('/registro', async (req, res) => {
                 return res.status(500).json({ error: 'Ha ocurrido un error inesperado. Inténtelo más tarde.' });
             }
             
-            // 5. Éxito: Devolvemos un mensaje y el ID del nuevo usuario
+            // Si está todo ok, devolvemos un mensaje y el ID del nuevo usuario
             res.status(201).json({ 
                 mensaje: 'Usuario registrado con éxito', 
                 id_usuario: this.lastID 
@@ -47,19 +45,19 @@ router.post('/registro', async (req, res) => {
     }
 });
 
-// ==========================================
-// CASO DE USO 2: LOGIN DE USUARIO
+
+// CASO: Login del Usuario
 // Ruta: POST /api/auth/login
-// ==========================================
+
 router.post('/login', (req, res) => {
-    // 1. Recibimos los datos
+    // Recibimos los datos
     const { email, password } = req.body;
 
     if (!email || !password) {
         return res.status(400).json({ error: 'Debe ingresar email y contraseña.' });
     }
 
-    // 2. Buscamos al usuario en la base de datos por su email
+    // Buscamos al usuario en la base de datos por su email
     const sql = `SELECT * FROM usuarios WHERE email = ?`;
     
     db.get(sql, [email], async (err, usuario) => {
@@ -67,22 +65,21 @@ router.post('/login', (req, res) => {
             return res.status(500).json({ error: 'Ha ocurrido un error inesperado. Inténtelo más tarde.' });
         }
         
-        // 3. Si no existe ningún usuario con ese email
+        // Si no existe ningún usuario con ese email
         if (!usuario) {
             return res.status(400).json({ error: 'Email no existe' });
         }
 
-        // 4. Si el email existe, comparamos la contraseña introducida con la encriptada
+        // Si el email existe, comparamos la contraseña introducida con la encriptada
         const isMatch = await bcrypt.compare(password, usuario.password);
         
-        // 5. Si no coinciden
+        // Si no coinciden
         if (!isMatch) {
             return res.status(400).json({ error: 'Contraseña incorrecta' });
         }
 
-        // 6. Éxito: Devolvemos los datos del usuario (sin enviar la contraseña)
-        // Tu frontend podrá usar estos datos para saber quién está conectado y cuál es su nivel
-        res.status(200).json({ 
+        // Si todo está ok, devolvemos los datos del usuario (sin la contraseña)
+            res.status(200).json({ 
             mensaje: 'Login exitoso', 
             usuario: { 
                 id: usuario.id_usuario, 

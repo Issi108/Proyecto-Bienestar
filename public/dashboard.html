@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel - Bienestar Integral</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="nav-brand">
+            <img src="assets/img/logo.png" alt="Logo" class="nav-logo">
+        </div>
+        <nav class="nav-links">
+            <a href="#mi-planning">Mi Planning</a>
+            <a href="#repositorio">Catálogo de Vídeos</a>
+            <button id="btn-logout" class="btn-outline">Cerrar Sesión</button>
+        </nav>
+    </header>
+
+    <main class="dashboard-content">
+        <section id="mi-planning" class="card-section">
+            <div class="section-header">
+                <h2>Tu Planning Semanal</h2>
+                <button id="btn-generar" class="btn-primary">Generar Semana</button>
+            </div>
+            
+            <div id="grid-planning" class="video-grid">
+                <p>Haz clic en "Generar Semana" para obtener tu rutina personalizada.</p>
+            </div>
+        </section>
+
+        <section id="repositorio" class="card-section">
+            <div class="section-header">
+                <h2>Catálogo Completo</h2>
+                <div class="filtros-container" style="display: flex; gap: 10px;">
+                    <select id="filtro-nivel" style="padding: 5px; border-radius: 5px;">
+                        <option value="">Todos los niveles</option>
+                        <option value="1">Principiante</option>
+                        <option value="2">Avanzado</option>
+                    </select>
+                    <button id="btn-filtrar" class="btn-outline">Filtrar</button>
+                </div>
+            </div>
+            
+            <div id="grid-repositorio" class="video-grid">
+                <p>Cargando vídeos...</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/dashboard.js"></script>
+
+</body>
+</html>

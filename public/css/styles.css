@@ -1,0 +1,122 @@
+/* Diseño en colores pasteles, tierra */
+
+:root {
+    --bg-color: #FAF6F0; /* Crema muy suave para el fondo */
+    --text-main: #4A3B32; /* Marrón muy oscuro para mayor contraste y legibilidad */
+    --primary-color: #D4A373; /* Naranja suave */
+    --secondary-color: #E9EDC9; /* Verde pastel */
+    --accent-color: #CCD5AE; /* Verde suave para botones secundarios */
+    --white: #FFFFFF;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --border-radius: 12px;
+}
+
+/*Tipografía */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif; 
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    line-height: 1.6;
+}
+
+/* Enlaces y botones */
+a { text-decoration: none; color: var(--primary-color); }
+button { cursor: pointer; border: none; font-weight: bold; transition: 0.3s; }
+
+/* Resaltar al navegar con teclado (accesibilidad) */
+button:focus, input:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+/*Registro-Login */
+.auth-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.auth-image {
+    display: none; 
+    background: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=1000') center/cover;
+}
+
+.auth-forms {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.logo { max-width: 150px; margin-bottom: 1rem; }
+.logo-container { text-align: center; margin-bottom: 2rem; }
+
+.form-box {
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 400px;
+}
+
+.input-group { margin-bottom: 1.5rem; }
+.input-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+.input-group input, .input-group select {
+    width: 100%; padding: 0.8rem; border: 1px solid #ccc;
+    border-radius: 8px; background: var(--bg-color);
+}
+
+.btn-primary {
+    width: 100%; padding: 1rem; background-color: var(--primary-color);
+    color: var(--white); border-radius: 8px; font-size: 1rem;
+    margin-top: 1rem; margin-bottom: 1rem;
+}
+.btn-primary:hover { background-color: #B58A5F; }
+
+/* Responsive */
+@media (min-width: 768px) {
+    .auth-image { display: block; flex: 1; }
+    .auth-forms { flex: 1; }
+}
+/* Dashboard */
+.navbar {
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--white); padding: 1rem 2rem;
+    box-shadow: var(--shadow); position: sticky; top: 0; z-index: 100;
+}
+
+.nav-logo { height: 40px; }
+.nav-links a { margin-right: 1.5rem; font-weight: 600; color: var(--text-main); }
+.nav-links a:hover { color: var(--primary-color); }
+
+.btn-outline {
+    background: transparent; border: 2px solid var(--primary-color);
+    color: var(--primary-color); padding: 0.5rem 1rem; border-radius: 8px;
+}
+.btn-outline:hover { background: var(--primary-color); color: var(--white); }
+
+.dashboard-content { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+
+.card-section {
+    background: var(--white); padding: 2rem; border-radius: var(--border-radius);
+    box-shadow: var(--shadow); margin-bottom: 2rem;
+}
+
+.section-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 1.5rem; border-bottom: 2px solid var(--bg-color); padding-bottom: 1rem;
+}
+
+/* Sistema Grid para los vídeos */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}

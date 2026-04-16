@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db/database');
 
-// ==========================================
-// FUNCIÓN AUXILIAR: Calcular semana actual
-// ==========================================
+
+// Función para calcular semana actual
+
 function getSemanaActual() {
     const fechaActual = new Date();
     const inicioAño = new Date(fechaActual.getFullYear(), 0, 1);
@@ -13,12 +13,12 @@ function getSemanaActual() {
     return { semana: numeroSemana, anio: fechaActual.getFullYear() };
 }
 
-// ==========================================
-// CASO DE USO 3: Generar Planning Semanal
+
+// CASO: Generar Planning Semanal
 // Ruta: POST /api/planning/generar
-// ==========================================
+
 router.post('/generar', (req, res) => {
-    // 1. Recibimos el ID del usuario desde el frontend o Thunder Client
+    // Recibimos el ID del usuario
     const { id_usuario } = req.body;
     const { semana, anio } = getSemanaActual();
 
@@ -26,7 +26,7 @@ router.post('/generar', (req, res) => {
         return res.status(400).json({ error: 'Falta el id de usuario.' });
     }
 
-    // 2. Verificamos si ya existe una semana generada para este usuario
+    // Verificamos si ya existe una semana generada para este usuario
     const sqlCheck = `SELECT * FROM semanas_usuario WHERE id_usuario = ? AND semana = ? AND anio = ?`;
     
     db.get(sqlCheck, [id_usuario, semana, anio], (err, semanaExistente) => {
@@ -51,7 +51,7 @@ router.post('/generar', (req, res) => {
         } 
         // Si no existe, procedemos a generarlo
         else {
-            // 3. Obtenemos las preferencias actuales del usuario
+            // Recibimos las preferencias actuales del usuario
             const sqlUser = `SELECT nivel_id, estado_preferente_id FROM usuarios WHERE id_usuario = ?`;
             
             db.get(sqlUser, [id_usuario], (err, usuario) => {
@@ -60,18 +60,18 @@ router.post('/generar', (req, res) => {
                 const nivel = usuario.nivel_id;
                 const estado = usuario.estado_preferente_id;
 
-                // 4. Seleccionamos 5 vídeos que cumplan los criterios (activos y de forma aleatoria)
+                // Seleccionamos 5 vídeos (activos y de forma aleatoria) que cumplan los criterios 
                 const sqlVideos = `SELECT id_video FROM videos WHERE nivel_id = ? AND estado_id = ? AND activo = 1 ORDER BY RANDOM() LIMIT 5`;
                 
                 db.all(sqlVideos, [nivel, estado], (err, videos) => {
                     if (err) return res.status(500).json({ error: 'Error al buscar vídeos.' });
 
-                    // Controlamos el error de tu Caso de Uso: Que no haya suficientes vídeos
+                    // Controlamos el error de que no haya suficientes vídeos
                     if (videos.length < 5) {
                         return res.status(400).json({ error: 'No hay suficientes vídeos disponibles para esta combinación.' });
                     }
 
-                    // 5. Insertamos la nueva semana en semanas_usuario
+                    // Insertamos la nueva semana en semanas_usuario
                     const sqlInsertSemana = `INSERT INTO semanas_usuario (id_usuario, semana, anio, nivel_usado_id, estado_usado_id) VALUES (?, ?, ?, ?, ?)`;
                     
                     db.run(sqlInsertSemana, [id_usuario, semana, anio, nivel, estado], function(err) {
@@ -79,7 +79,7 @@ router.post('/generar', (req, res) => {
 
                         const id_semana_nueva = this.lastID;
                         
-                        // 6. Insertamos los 5 vídeos en la tabla planning_usuario
+                        // Insertamos los 5 vídeos en la tabla planning_usuario
                         const fechaActual = new Date().toISOString().split('T')[0]; // Formato YYYY-MM-DD
                         
                         // Creamos una cadena de inserción múltiple para los 5 vídeos: (?, ?, ?), (?, ?, ?)...
@@ -105,10 +105,10 @@ router.post('/generar', (req, res) => {
         }
     });
 });
-// ==========================================
-// CASO DE USO 4: Marcar vídeo como completado 
+
+// CASO: Marcar vídeo como completado 
 // Ruta: PATCH /api/planning/:id_planning/completar
-// ==========================================
+
 router.patch('/:id_planning/completar', (req, res) => {
     // Obtenemos el ID específico del registro en la tabla planning_usuario
     const id_planning = req.params.id_planning;

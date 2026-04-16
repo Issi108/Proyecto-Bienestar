@@ -2,11 +2,10 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db/database');
 
-// ==========================================
-// RUTAS PÚBLICAS (Repositorio)
-// ==========================================
 
-// CASO DE USO 5: Consultar repositorio (con filtros)
+// Repositorio
+
+// CASO: Consultar repositorio (con filtros)
 // Ruta: GET /api/videos
 router.get('/', (req, res) => {
     // Recibimos los filtros opcionales desde la URL (ej: /api/videos?nivel_id=1&estado_id=2)
@@ -40,11 +39,10 @@ router.get('/', (req, res) => {
 });
 
 
-// ==========================================
-// RUTAS DE ADMINISTRADOR
-// ==========================================
 
-// CASO DE USO 8: Alta de vídeo
+// Administrador
+
+// CASO: Alta de vídeo
 // Ruta: POST /api/videos
 router.post('/', (req, res) => {
     const { titulo, descripcion, url, duracion, nivel_id, estado_id } = req.body;
@@ -66,7 +64,7 @@ router.post('/', (req, res) => {
     });
 });
 
-// CASO DE USO 8: Modificación de vídeo
+// CASO: Modificación de vídeo
 // Ruta: PUT /api/videos/:id
 router.put('/:id', (req, res) => {
     const id_video = req.params.id;
@@ -84,7 +82,7 @@ router.put('/:id', (req, res) => {
     });
 });
 
-// CASO DE USO 8: Activar/Desactivar vídeo (baja)
+// CASO: Activar/Desactivar vídeo 
 // Ruta: PATCH /api/videos/:id/estado
 router.patch('/:id/estado', (req, res) => {
     const id_video = req.params.id;
