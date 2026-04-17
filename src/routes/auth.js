@@ -91,5 +91,20 @@ router.post('/login', (req, res) => {
     });
 });
 
+// Ruta para actualizar el perfil (Nivel y Estado Emocional)
+router.put('/perfil/:id', (req, res) => {
+    const { id } = req.params;
+    const { nivel_id, estado_preferente_id } = req.body;
+
+    const query = `UPDATE usuarios SET nivel_id = ?, estado_preferente_id = ? WHERE id_usuario = ?`;
+    
+    db.run(query, [nivel_id, estado_preferente_id, id], function(err) {
+        if (err) {
+            return res.status(500).json({ error: 'Error al actualizar el perfil.' });
+        }
+        res.json({ mensaje: 'Perfil actualizado correctamente.' });
+    });
+});
+
 // Exportamos las rutas para poder usarlas en server.js
 module.exports = router;

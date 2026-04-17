@@ -38,5 +38,32 @@ router.post('/', (req, res) => {
         });
     });
 });
+// CASO: Obtener la lista de favoritos de un usuario
+// Ruta: GET /api/favoritos/:id_usuario
+router.get('/:id_usuario', (req, res) => {
+    // Conseguimos el ID del usuario de la URL
+    const { id_usuario } = req.params;
+
+    // Preparamos la consulta SQL: Unimos (JOIN) la tabla de vídeos con la de favoritos 
+    // Sacamos los vídeos que pertenecen a este usuario
+    const query = `
+        SELECT v.id_video, v.titulo, v.duracion, v.url 
+        FROM videos v
+        JOIN favoritos f ON v.id_video = f.id_video
+        WHERE f.id_usuario = ?
+    `;
+
+    // Ejecutamos la consulta
+    db.all(query, [id_usuario], (err, rows) => {
+        if (err) {
+            console.error("Error al obtener favoritos:", err);
+            return res.status(500).json({ error: 'Error al obtener la lista de favoritos.' });
+        }
+        
+    // Devolvemos los vídeos encontrados al frontend
+        res.json(rows);
+    });
+});
+
 
 module.exports = router;

@@ -14,6 +14,8 @@
         <nav class="nav-links">
             <a href="#mi-planning">Mi Planning</a>
             <a href="#repositorio">Catálogo de Vídeos</a>
+            <a href="#mis-favoritos">Mis Favoritos</a>
+            <a href="#mi-perfil">Mi Perfil</a>
             <button id="btn-logout" class="btn-outline">Cerrar Sesión</button>
         </nav>
     </header>
@@ -39,6 +41,12 @@
                         <option value="1">Principiante</option>
                         <option value="2">Avanzado</option>
                     </select>
+                    <select id="filtro-estado" style="padding: 5px; border-radius: 5px;">
+                        <option value="">Todos los estados</option>
+                        <option value="1">Calma</option>
+                        <option value="2">Equilibrio</option>
+                        <option value="3">Energía</option>
+                    </select>
                     <button id="btn-filtrar" class="btn-outline">Filtrar</button>
                 </div>
             </div>
@@ -46,6 +54,39 @@
             <div id="grid-repositorio" class="video-grid">
                 <p>Cargando vídeos...</p>
             </div>
+        </section>
+        
+        <section id="mis-favoritos" class="card-section">
+            <div class="section-header">
+                <h2>Mis Vídeos Favoritos</h2>
+                <button id="btn-cargar-favoritos" class="btn-outline">Actualizar Favoritos</button>
+            </div>
+            <div id="grid-favoritos" class="video-grid">
+                <p>Aún no tienes vídeos en favoritos o necesitas recargar.</p>
+            </div>
+        </section>
+       
+        <section id="mi-perfil" class="card-section">
+            <h2>Configuración de Perfil</h2>
+                <p>Ajusta tus preferencias para las próximas semanas:</p>
+                <form id="form-perfil" style="margin-top: 1.5rem; max-width: 400px;">
+                    <div class="input-group">
+                        <label>Nivel de práctica</label>
+                        <select id="perfil-nivel">
+                            <option value="1">Principiante</option>
+                            <option value="2">Avanzado</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Estado emocional preferente</label>
+                        <select id="perfil-estado">
+                            <option value="1">Calma</option>
+                            <option value="2">Equilibrio</option>
+                            <option value="3">Energía</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary">Guardar Cambios</button>
+                </form>
         </section>
     </main>
 
