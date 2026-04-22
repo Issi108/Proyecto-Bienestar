@@ -1,9 +1,9 @@
 const request = require('supertest');
-const app = require('../server'); // Importamos tu servidor
+const app = require('../server'); // Importamos el servidor
 
 describe('Pruebas de Autenticación y Planning', () => {
 
-    // PRUEBA 1: Que el registro falle si el email ya existe
+    // TEST 1: Que el registro falle si el email ya existe
     it('Debería devolver un error 400 si el email ya está registrado', async () => {
         const res = await request(app)
             .post('/api/auth/registro')
@@ -20,7 +20,7 @@ describe('Pruebas de Autenticación y Planning', () => {
         expect(res.body.error).toBe('El correo electrónico ya está registrado.');
     });
 
-    // PRUEBA 2: Que la generación devuelva 5 vídeos (o diga que ya existe)
+    // TEST 2: Que la generación devuelva 5 vídeos (o que diga que ya existe)
     it('Debería generar un planning con exactamente 5 vídeos o devolver el existente', async () => {
         const res = await request(app)
             .post('/api/planning/generar')

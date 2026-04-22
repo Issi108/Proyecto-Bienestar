@@ -130,7 +130,7 @@ function pintarRepositorio(videos) {
             <p style="font-size: 0.9em; color: #666;">Duración: ${video.duracion} min</p>
             <div style="margin-top: 15px; display: flex; justify-content: space-between; align-items: center;">
                 <a href="${video.url}" target="_blank" style="color: #D4A373; font-weight: bold;">Ver vídeo</a>
-                <button class="btn-favorito btn-outline" data-id="${video.id_video}" style="padding: 5px 10px; font-size: 0.8em;">❤️ Favorito</button>
+                <button class="btn-favorito btn-outline" data-id="${video.id_video}" style="padding: 5px 10px; font-size: 0.8em;">🧡 Favorito</button>
             </div>
         `;
         gridRepositorio.appendChild(tarjeta);
@@ -207,7 +207,7 @@ async function cargarFavoritos() {
             tarjeta.style.border = '1px solid #ffdddd'; // Borde rojizo para distinguirlos
             
             tarjeta.innerHTML = `
-                <h4 style="color: #4A3B32;">❤️ ${video.titulo}</h4>
+                <h4 style="color: #4A3B32;">🧡 ${video.titulo}</h4>
                 <p style="font-size: 0.9em; color: #666;">Duración: ${video.duracion} min</p>
                 <a href="${video.url}" target="_blank" style="display:block; margin-top: 15px; color: #D4A373; font-weight: bold;">Ver vídeo</a>
             `;

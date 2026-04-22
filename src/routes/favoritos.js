@@ -46,7 +46,7 @@ router.get('/:id_usuario', (req, res) => {
 
     // Preparamos la consulta SQL: Unimos (JOIN) la tabla de vídeos con la de favoritos 
     // Sacamos los vídeos que pertenecen a este usuario
-    const query = `
+    const sql = `
         SELECT v.id_video, v.titulo, v.duracion, v.url 
         FROM videos v
         JOIN favoritos f ON v.id_video = f.id_video
@@ -54,7 +54,7 @@ router.get('/:id_usuario', (req, res) => {
     `;
 
     // Ejecutamos la consulta
-    db.all(query, [id_usuario], (err, rows) => {
+    db.all(sql, [id_usuario], (err, rows) => {
         if (err) {
             console.error("Error al obtener favoritos:", err);
             return res.status(500).json({ error: 'Error al obtener la lista de favoritos.' });

@@ -8,7 +8,7 @@ const db = require('../db/database');
 // CASO: Consultar repositorio (con filtros)
 // Ruta: GET /api/videos
 router.get('/', (req, res) => {
-    // Recibimos los filtros opcionales desde la URL (ej: /api/videos?nivel_id=1&estado_id=2)
+    // Recibimos los filtros opcionales desde la url
     const { nivel_id, estado_id } = req.query;
     
     // Por defecto, buscamos solo los vídeos activos

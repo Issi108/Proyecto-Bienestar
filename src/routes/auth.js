@@ -14,6 +14,11 @@ router.post('/registro', async (req, res) => {
     if (!nombre || !email || !password) {
         return res.status(400).json({ error: 'Debe completar todos los campos obligatorios.' });
     }
+    // Validamos email con Expresiones Regulares (regex)
+    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regexEmail.test(email)) {
+        return res.status(400).json({ error: 'Por favor, introduce un correo electrónico válido.' });
+    }
 
     try {
         // Encriptamos la contraseña (uso librería bcrypt)
@@ -91,14 +96,14 @@ router.post('/login', (req, res) => {
     });
 });
 
-// Ruta para actualizar el perfil (Nivel y Estado Emocional)
+// Ruta para actualizar el perfil (nivel y estado emocional)
 router.put('/perfil/:id', (req, res) => {
     const { id } = req.params;
     const { nivel_id, estado_preferente_id } = req.body;
 
-    const query = `UPDATE usuarios SET nivel_id = ?, estado_preferente_id = ? WHERE id_usuario = ?`;
+    const sql = `UPDATE usuarios SET nivel_id = ?, estado_preferente_id = ? WHERE id_usuario = ?`;
     
-    db.run(query, [nivel_id, estado_preferente_id, id], function(err) {
+    db.run(sql, [nivel_id, estado_preferente_id, id], function(err) {
         if (err) {
             return res.status(500).json({ error: 'Error al actualizar el perfil.' });
         }
